@@ -1,4 +1,3 @@
-// src/admin-ui/pages/AdminDashboard.js
 import React from 'react';
 import Upload from '../components/Upload';
 import { Link } from 'react-router-dom';
