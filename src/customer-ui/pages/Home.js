@@ -8,8 +8,7 @@ function Home() {
             <Header />
             <h1>Customer Home Page</h1>
 
-            {/* Link to navigate to the Admin UI */}
-            <Link to="/admin">Open Admin UI</Link>
+
         </div>
     );
 }
