@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css'
 import Home from './customer-ui/pages/Home.js'
 import AdminDashboard from './admin-ui/pages/AdminDashboard.js'
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 
 function App() {
