@@ -3,38 +3,43 @@ import React, { useEffect, useState } from 'react';
 function Items() {
     const [tableData, setTableData] = useState([]);
 
-
     useEffect(() => {
+        const handleStorageChange = (event) => {
+            if (event.key === 'tableData') {
+                const data = event.newValue;
+                setTableData(JSON.parse(data));
+            }
+        };
+
+        window.addEventListener('storage', handleStorageChange);
+
         const data = localStorage.getItem('tableData');
         if (data) {
             setTableData(JSON.parse(data));
         }
-    }, []);
 
-    // Create Event Event to reload data.
-    // Loaded This Componant
-    // chnage state that holds the data. 
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+        };
+    }, []);
 
     return (
         <div className="card-container">
             {tableData.map((rowData, index) => (
-                <div className="card">
+                <div className="card" key={index}>
                     <ul>
-                        {rowData.map((cellData) => (
+                        {rowData.map((cellData, cellIndex) => (
                             index !== 0 && (
-                                <li>
+                                <li key={cellIndex}>
                                     {cellData}
                                 </li>
                             )
                         ))}
-
                     </ul>
                 </div>
             ))}
-
         </div>
-
-    )
+    );
 }
 
-export default Items
+export default Items;
