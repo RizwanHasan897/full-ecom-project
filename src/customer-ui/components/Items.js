@@ -11,6 +11,10 @@ function Items() {
         }
     }, []);
 
+    // Create Event Event to reload data.
+    // Loaded This Componant
+    // chnage state that holds the data. 
+
     return (
         <div className="card-container">
             {tableData.map((rowData, index) => (
