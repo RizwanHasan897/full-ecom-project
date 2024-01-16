@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Upload from '../components/Upload';
 import { Link } from 'react-router-dom';
 
-
 function AdminDashboard() {
+    const [tableData, setTableData] = useState([]);
+
+    useEffect(() => {
+        const storedData = localStorage.getItem('tableData');
+        if (storedData) {
+            setTableData(JSON.parse(storedData));
+        }
+    }, []);
 
     function fileInput(event) {
         const fileInput = event.target;
@@ -20,51 +27,34 @@ function AdminDashboard() {
     }
 
     function loadFile(data) {
-        const container = document.querySelector('.table-container');
-
         const dataRows = data.split('\r\n');
         const finalArray = dataRows.map((row) => row.split(',').map((col) => col.trim()));
 
-        const table = document.createElement('table');
-
-        finalArray.forEach((rowData) => {
-            const row = document.createElement('tr');
-            rowData.forEach((cellData) => {
-                if (cellData !== '') {
-                    const cell = document.createElement('td');
-                    cell.textContent = cellData;
-                    row.appendChild(cell);
-                }
-            });
-
-            if (row.children.length > 0) {
-                table.appendChild(row);
-            }
-        });
-
-        container.innerHTML = '';
-        container.appendChild(table);
-
+        setTableData(finalArray);
         localStorage.setItem('tableData', JSON.stringify(finalArray));
-
-        // Luffy
-        // array[2][index].classlist
-        // array of oject
-        // use event to auto update 
-
-        // class
-        // name :{name: [0], size[1]}
-        // [1,2,3,4,5] 
-        // json Manipulation
-        // store in bit format
-        // know translate design in layout 
     }
 
     return (
         <div>
-            <Link className="login" to="/customer" target="_blank">Live site</Link>
+            <Link className="login" to="/customer" target="_blank">
+                Live site
+            </Link>
             <h1>Admin Dashboard</h1>
             <Upload fileInput={fileInput} loadFile={loadFile} />
+
+            <div className="table-container">
+                <table>
+                    <tbody>
+                        {tableData.map((rowData, rowIndex) => (
+                            <tr key={rowIndex}>
+                                {rowData.map((cellData, cellIndex) => (
+                                    <td key={cellIndex}>{cellData}</td>
+                                ))}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 }
