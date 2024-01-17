@@ -23,17 +23,17 @@ function Items() {
         };
     }, []);
 
+    const filteredTableData = tableData.filter((rowData) => rowData.some((cellData) => cellData !== ''));
+
     return (
         <div className="card-container">
-            {tableData.map((rowData, index) => (
+            {filteredTableData.slice(1).map((rowData, index) => (
                 <div className="card" key={index}>
                     <ul>
                         {rowData.map((cellData, cellIndex) => (
-                            index !== 0 && (
-                                <li key={cellIndex}>
-                                    {cellData}
-                                </li>
-                            )
+                            <li key={cellIndex}>
+                                {cellData}
+                            </li>
                         ))}
                     </ul>
                 </div>

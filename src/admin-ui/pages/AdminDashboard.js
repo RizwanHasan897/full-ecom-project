@@ -34,6 +34,7 @@ function AdminDashboard() {
         localStorage.setItem('tableData', JSON.stringify(finalArray));
     }
 
+
     return (
         <div>
             <Link className="login" to="/customer" target="_blank">
