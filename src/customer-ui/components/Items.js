@@ -31,8 +31,9 @@ function Items() {
                 <div className="card" key={index}>
                     <ul>
                         {rowData.map((cellData, cellIndex) => (
-                            <li key={cellIndex}>
+                            <li key={cellIndex} className={"card-data" + cellIndex}>
                                 {cellData}
+                                {console.log(cellIndex)}
                             </li>
                         ))}
                     </ul>

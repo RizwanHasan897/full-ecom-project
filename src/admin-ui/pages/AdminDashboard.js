@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Upload from '../components/Upload';
 import { Link } from 'react-router-dom';
+import EditPop from '../components/EditPop';
 
 function AdminDashboard() {
     const [tableData, setTableData] = useState([]);
@@ -34,6 +35,11 @@ function AdminDashboard() {
         localStorage.setItem('tableData', JSON.stringify(finalArray));
     }
 
+    function editTrFunc(data) {
+        // console.log(data)
+        <EditPop props={data} />
+
+    }
 
     return (
         <div>
@@ -49,13 +55,17 @@ function AdminDashboard() {
                         {tableData.map((rowData, rowIndex) => (
                             <tr key={rowIndex}>
                                 {rowData.map((cellData, cellIndex) => (
-                                    <td key={cellIndex}>{cellData}</td>
+                                    <td key={cellIndex} onClick={() => editTrFunc(cellData)}>{cellData}</td>
                                 ))}
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
+
+            <EditPop />
+
+
         </div>
     );
 }
