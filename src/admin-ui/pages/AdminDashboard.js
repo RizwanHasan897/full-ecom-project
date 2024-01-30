@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Upload from '../components/Upload';
 import { Link } from 'react-router-dom';
-import EditPop from '../components/EditPop';
 
 function AdminDashboard() {
     const [tableData, setTableData] = useState([]);
@@ -35,11 +34,18 @@ function AdminDashboard() {
         localStorage.setItem('tableData', JSON.stringify(finalArray));
     }
 
-    function editTrFunc(data) {
-        // console.log(data)
-        <EditPop props={data} />
+    function editTable(event, data) {
+        const toEdit = event.target;
+        toEdit.setAttribute('ContentEditable', true);
+        const editbutton = document.createElement('button');
+        editbutton.classList.add('edit-button')
+        editbutton.innertext = 'Change';
+        toEdit.addEventListener('click', () => {
+            toEdit.innterHTML += `<button>Change</button>`
 
+        })
     }
+
 
     return (
         <div>
@@ -55,7 +61,7 @@ function AdminDashboard() {
                         {tableData.map((rowData, rowIndex) => (
                             <tr key={rowIndex}>
                                 {rowData.map((cellData, cellIndex) => (
-                                    <td key={cellIndex} onClick={() => editTrFunc(cellData)}>{cellData}</td>
+                                    <td key={cellIndex} onClick={(e) => editTable(e, cellData)}>{cellData}</td>
                                 ))}
                             </tr>
                         ))}
@@ -63,7 +69,6 @@ function AdminDashboard() {
                 </table>
             </div>
 
-            <EditPop />
 
 
         </div>
