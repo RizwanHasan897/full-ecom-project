@@ -37,13 +37,9 @@ function AdminDashboard() {
     function editTable(event, data) {
         const toEdit = event.target;
         toEdit.setAttribute('ContentEditable', true);
-        const editbutton = document.createElement('button');
-        editbutton.classList.add('edit-button')
-        editbutton.innertext = 'Change';
-        toEdit.addEventListener('click', () => {
-            toEdit.innterHTML += `<button>Change</button>`
+        toEdit.innterHTML += `<button>Change</button>`
+        console.log(toEdit)
 
-        })
     }
 
 
