@@ -85,16 +85,16 @@
 .table-container {
   width: 80%;
   margin: 0 auto;
-  max-height: 20rem;
+  max-height: 80vh;
   overflow: auto;
 }
 
 table {
+  width: 100%;
+  max-height: 100%; 
+  overflow: auto;
   border-collapse: collapse;
   margin: 0 auto;
-  overflow: auto;
-  width: 100%;
-  max-height: 2rem; 
 }
 
 table, th, td {
@@ -104,14 +104,36 @@ table, th, td {
 th {
   background-color: #f2f2f2;
   text-align: left;
+  position: sticky;
+  top: 0;
 }
 
 th, td {
-  padding: 8px;
+  padding: 15px;
 }
 
-td:hover {
-  background-color: #f5f5f5;
+
+input{
+  font-size: 1em;
+  padding: 5px;
+}
+
+.change-btn{
+  background-color: green;
+  margin-left: 10px;
+  color: #fff;
+  padding: .2em;
+}
+
+.cancel-btn{
+  background-color: red;
+  margin-left: 10px;
+  color: #fff;
+  padding: .2em;
+}
+
+.hovered {
+  background-color: #d5d5d5;
 }
 
 .card-container {
@@ -139,10 +161,4 @@ td:hover {
 
 .card li {
   margin-bottom: 5px;
-}
-
-
-.edit-button{
-  background-color: green;
-  font-size: 1.5rem;
 }

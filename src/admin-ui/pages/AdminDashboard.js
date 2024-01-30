@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 
 function AdminDashboard() {
     const [tableData, setTableData] = useState([]);
+    const [hoveredRow, setHoveredRow] = useState(null);
+    const [hoveredCol, setHoveredCol] = useState(null);
 
     useEffect(() => {
         const storedData = localStorage.getItem('tableData');
@@ -34,12 +36,46 @@ function AdminDashboard() {
         localStorage.setItem('tableData', JSON.stringify(finalArray));
     }
 
-    function editTable(event, data) {
-        const toEdit = event.target;
-        toEdit.setAttribute('ContentEditable', true);
-        toEdit.innterHTML += `<button>Change</button>`
-        console.log(toEdit)
+    function editTable(event, rowIndex, cellIndex) {
+        const tdElement = event.target;
+        const currentValue = tableData[rowIndex][cellIndex];
 
+        const inputElement = document.createElement('input');
+        inputElement.type = 'text';
+        inputElement.value = currentValue;
+        tdElement.classList.add('edit-input');
+
+        const changeButton = document.createElement('button');
+        changeButton.innerText = '✓';
+        changeButton.classList.add('change-btn');
+
+        const cancelChangeButton = document.createElement('button');
+        cancelChangeButton.innerText = 'X';
+        cancelChangeButton.classList.add('cancel-btn');
+
+
+        const checkButtonExist = tdElement.querySelector('button');
+        if (checkButtonExist === null) {
+            tdElement.innerHTML = '';
+            tdElement.appendChild(inputElement);
+            tdElement.appendChild(cancelChangeButton);
+            tdElement.appendChild(changeButton);
+            inputElement.focus();
+
+        }
+
+        changeButton.addEventListener('click', () => {
+            const updatedTableData = [...tableData];
+            updatedTableData[rowIndex][cellIndex] = inputElement.value;
+            setTableData(updatedTableData);
+            localStorage.setItem('tableData', JSON.stringify(updatedTableData));
+
+            tdElement.innerHTML = currentValue;
+        });
+
+        cancelChangeButton.addEventListener('click', () => {
+            tdElement.innerHTML = currentValue;
+        });
     }
 
 
@@ -53,14 +89,39 @@ function AdminDashboard() {
 
             <div className="table-container">
                 <table>
+                    <thead>
+                        <tr>
+                            {tableData.length > 0 &&
+                                tableData[0].map((header, headerIndex) => (
+
+                                    <th key={headerIndex}>{header}</th>
+                                ))}
+                        </tr>
+                    </thead>
+
                     <tbody>
-                        {tableData.map((rowData, rowIndex) => (
-                            <tr key={rowIndex}>
+                        {tableData.slice(1).map((rowData, rowIndex) => (
+                            <tr
+                                key={rowIndex}
+                                onMouseEnter={() => setHoveredRow(rowIndex)}
+                                onMouseLeave={() => setHoveredRow(null)}
+                            >
                                 {rowData.map((cellData, cellIndex) => (
-                                    <td key={cellIndex} onClick={(e) => editTable(e, cellData)}>{cellData}</td>
+                                    <React.Fragment key={cellIndex}>
+                                        {cellData !== '' && (
+                                            <td
+                                                onClick={(e) => editTable(e, rowIndex, cellIndex)}
+                                                className={rowIndex === hoveredRow || cellIndex === hoveredCol ? 'hovered' : ''}
+                                                onMouseEnter={() => setHoveredCol(cellIndex)}
+                                                onMouseLeave={() => setHoveredCol(null)}>
+                                                {cellData}
+                                            </td>
+                                        )}
+                                    </React.Fragment>
                                 ))}
                             </tr>
                         ))}
+
                     </tbody>
                 </table>
             </div>
