@@ -38,7 +38,7 @@ function AdminDashboard() {
 
     function editTable(event, rowIndex, cellIndex) {
         const tdElement = event.target;
-        const currentValue = tableData[rowIndex][cellIndex];
+        const currentValue = tableData[rowIndex + 1][cellIndex];
 
         const inputElement = document.createElement('input');
         inputElement.type = 'text';
@@ -66,7 +66,7 @@ function AdminDashboard() {
 
         changeButton.addEventListener('click', () => {
             const updatedTableData = [...tableData];
-            updatedTableData[rowIndex][cellIndex] = inputElement.value;
+            updatedTableData[rowIndex + 1][cellIndex] = inputElement.value;
             setTableData(updatedTableData);
             localStorage.setItem('tableData', JSON.stringify(updatedTableData));
 
