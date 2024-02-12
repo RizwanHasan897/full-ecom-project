@@ -26,14 +26,14 @@ function Items() {
     const filteredTableData = tableData.filter((rowData) => rowData.some((cellData) => cellData !== ''));
 
     return (
-        <div className="card-container">
+        <div className="card-slider-container">
             {filteredTableData.slice(1).map((rowData, index) => (
                 <div className="card" key={index}>
                     <ul>
                         {rowData.map((cellData, cellIndex) => (
                             <li key={cellIndex} className={"card-data" + cellIndex}>
                                 {cellData}
-                                {console.log(cellIndex)}
+                                {console.log(cellData)}
                             </li>
                         ))}
                     </ul>

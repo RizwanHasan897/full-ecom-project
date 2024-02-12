@@ -5,8 +5,8 @@ function Home() {
     return (
 
         <div>
-            <Header />
-            <h1>Customer Home Page</h1>
+            {/* <Header /> */}
+            {/* <h1>Customer Home Page</h1> */}
             <Items />
 
         </div>

@@ -40,43 +40,30 @@ function AdminDashboard() {
         const tdElement = event.target;
         const currentValue = tableData[rowIndex + 1][cellIndex];
 
-        const inputElement = document.createElement('input');
-        inputElement.type = 'text';
-        inputElement.value = currentValue;
-        tdElement.classList.add('edit-input');
-
-        const changeButton = document.createElement('button');
-        changeButton.innerText = '✓';
-        changeButton.classList.add('change-btn');
-
-        const cancelChangeButton = document.createElement('button');
-        cancelChangeButton.innerText = 'X';
-        cancelChangeButton.classList.add('cancel-btn');
-
-
-        const checkButtonExist = tdElement.querySelector('button');
-        if (checkButtonExist === null) {
+        if (!tdElement.classList.contains('edit-mode')) {
+            const inputElement = document.createElement('input');
+            inputElement.type = 'text';
+            inputElement.value = currentValue;
             tdElement.innerHTML = '';
             tdElement.appendChild(inputElement);
-            tdElement.appendChild(cancelChangeButton);
-            tdElement.appendChild(changeButton);
             inputElement.focus();
 
+            tdElement.classList.add('edit-mode');
+
+            inputElement.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    const updatedTableData = [...tableData];
+                    updatedTableData[rowIndex + 1][cellIndex] = inputElement.value;
+                    setTableData(updatedTableData);
+                    localStorage.setItem('tableData', JSON.stringify(updatedTableData));
+
+                    tdElement.innerHTML = inputElement.value;
+                    tdElement.classList.remove('edit-mode');
+                }
+            });
         }
-
-        changeButton.addEventListener('click', () => {
-            const updatedTableData = [...tableData];
-            updatedTableData[rowIndex + 1][cellIndex] = inputElement.value;
-            setTableData(updatedTableData);
-            localStorage.setItem('tableData', JSON.stringify(updatedTableData));
-
-            tdElement.innerHTML = currentValue;
-        });
-
-        cancelChangeButton.addEventListener('click', () => {
-            tdElement.innerHTML = currentValue;
-        });
     }
+
 
 
     return (
