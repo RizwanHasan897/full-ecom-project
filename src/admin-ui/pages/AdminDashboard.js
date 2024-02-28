@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Upload from '../components/Upload';
 import { Link } from 'react-router-dom';
 
 function AdminDashboard() {
     const [tableData, setTableData] = useState([]);
+    const [editingCell, setEditingCell] = useState(null);
     const [hoveredRow, setHoveredRow] = useState(null);
     const [hoveredCol, setHoveredCol] = useState(null);
+
+    const inputRef = useRef(null);
 
     useEffect(() => {
         const storedData = localStorage.getItem('tableData');
@@ -13,6 +16,12 @@ function AdminDashboard() {
             setTableData(JSON.parse(storedData));
         }
     }, []);
+
+    useEffect(() => {
+        if (editingCell) {
+            inputRef.current.focus();
+        }
+    }, [editingCell]);
 
     function fileInput(event) {
         const fileInput = event.target;
@@ -36,35 +45,17 @@ function AdminDashboard() {
         localStorage.setItem('tableData', JSON.stringify(finalArray));
     }
 
-    function editTable(event, rowIndex, cellIndex) {
-        const tdElement = event.target;
-        const currentValue = tableData[rowIndex + 1][cellIndex];
-
-        if (!tdElement.classList.contains('edit-mode')) {
-            const inputElement = document.createElement('input');
-            inputElement.type = 'text';
-            inputElement.value = currentValue;
-            tdElement.innerHTML = '';
-            tdElement.appendChild(inputElement);
-            inputElement.focus();
-
-            tdElement.classList.add('edit-mode');
-
-            inputElement.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') {
-                    const updatedTableData = [...tableData];
-                    updatedTableData[rowIndex + 1][cellIndex] = inputElement.value;
-                    setTableData(updatedTableData);
-                    localStorage.setItem('tableData', JSON.stringify(updatedTableData));
-
-                    tdElement.innerHTML = inputElement.value;
-                    tdElement.classList.remove('edit-mode');
-                }
-            });
-        }
+    function updateCellValue(newValue, rowIndex, cellIndex) {
+        const updatedTableData = [...tableData];
+        updatedTableData[rowIndex][cellIndex] = newValue;
+        setTableData(updatedTableData);
+        localStorage.setItem('tableData', JSON.stringify(updatedTableData));
+        setEditingCell(null);
     }
 
-
+    function editTable(rowIndex, cellIndex) {
+        setEditingCell({ rowIndex, cellIndex });
+    }
 
     return (
         <div>
@@ -80,41 +71,67 @@ function AdminDashboard() {
                         <tr>
                             {tableData.length > 0 &&
                                 tableData[0].map((header, headerIndex) => (
-
                                     <th key={headerIndex}>{header}</th>
                                 ))}
                         </tr>
                     </thead>
 
                     <tbody>
-                        {tableData.slice(1).map((rowData, rowIndex) => (
-                            <tr
-                                key={rowIndex}
-                                onMouseEnter={() => setHoveredRow(rowIndex)}
-                                onMouseLeave={() => setHoveredRow(null)}
-                            >
-                                {rowData.map((cellData, cellIndex) => (
-                                    <React.Fragment key={cellIndex}>
-                                        {cellData !== '' && (
-                                            <td
-                                                onClick={(e) => editTable(e, rowIndex, cellIndex)}
-                                                className={rowIndex === hoveredRow || cellIndex === hoveredCol ? 'hovered' : ''}
-                                                onMouseEnter={() => setHoveredCol(cellIndex)}
-                                                onMouseLeave={() => setHoveredCol(null)}>
-                                                {cellData}
-                                            </td>
-                                        )}
-                                    </React.Fragment>
-                                ))}
-                            </tr>
-                        ))}
+                        {tableData.slice(1).map((rowData, rowIndex) => {
+                            // Check if the row contains any non-empty cells
+                            const hasData = rowData.some(cellData => cellData.trim() !== '');
+                            if (!hasData) {
+                                return null; // Skip rendering empty rows
+                            }
 
+                            return (
+                                <tr
+                                    key={rowIndex}
+                                    onMouseEnter={() => rowIndex > 0 && setHoveredRow(rowIndex)}
+                                    onMouseLeave={() => setHoveredRow(null)}
+                                >
+                                    {rowData.map((cellData, cellIndex) => (
+                                        <td
+                                            key={cellIndex}
+                                            className={
+                                                (rowIndex === hoveredRow || cellIndex === hoveredCol) &&
+                                                    !(editingCell && editingCell.rowIndex - 1 === rowIndex && editingCell.cellIndex === cellIndex)
+                                                    ? 'hovered'
+                                                    : ''
+                                            }
+                                            onMouseEnter={() => setHoveredCol(cellIndex)}
+                                            onMouseLeave={() => setHoveredCol(null)}
+                                            onClick={() => editTable(rowIndex + 1, cellIndex)}
+                                        >
+                                            {editingCell && editingCell.rowIndex === rowIndex + 1 && editingCell.cellIndex === cellIndex ? (
+                                                <input
+                                                    type="text"
+                                                    className='edit-input'
+                                                    value={cellData}
+                                                    onChange={(e) => setTableData(prevTableData => {
+                                                        const updatedTableData = [...prevTableData];
+                                                        updatedTableData[rowIndex + 1][cellIndex] = e.target.value;
+                                                        return updatedTableData;
+                                                    })}
+                                                    onKeyDown={(e) => {
+                                                        if (e.key === 'Enter') {
+                                                            updateCellValue(e.target.value, rowIndex + 1, cellIndex);
+                                                        }
+                                                    }}
+                                                    onBlur={(e) => updateCellValue(e.target.value, rowIndex + 1, cellIndex)}
+                                                    ref={inputRef}
+                                                />
+                                            ) : (
+                                                cellData
+                                            )}
+                                        </td>
+                                    ))}
+                                </tr>
+                            );
+                        })}
                     </tbody>
                 </table>
             </div>
-
-
-
         </div>
     );
 }
