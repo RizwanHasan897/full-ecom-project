@@ -1,4 +1,10 @@
-﻿Name ,Price ,Quantity ,Weight ,Height,Width ,Depth 
-Luffy ,20.00,15,15,150,50,30
-Zoro ,15.00,11,20,190,70,50
-Sanji ,12.50,5,18,170,60,40
+﻿Image,Name ,Price ,Quantity ,Weight ,Height,Width ,Depth 
+../Luffy.jpeg ,Luffy ,20,15,15,150,50,30
+../Zoro.png ,Zoro ,15,11,20,190,70,50
+../Sanji.jpeg ,Sanji ,12.5,5,18,170,60,40
+../Nami.jpg,Nami,20,15,15,150,50,30
+../Robin.jpg ,Robin,15,11,20,190,70,50
+../ussop.png,Ussop,12.5,5,18,170,60,40
+../Jinbai.png,Jinbai,20,15,15,150,50,30
+../Chopper,Chooper,15,11,20,190,70,50
+../Kid.png,Kid,12.5,5,18,170,60,40
