@@ -138,6 +138,7 @@ th, td {
   height: 100vh;
 }
 
+
 .card {
   border: 1px solid #ddd;
   padding: 15px;
@@ -146,6 +147,12 @@ th, td {
   flex: 0 0 auto;
   height: 50vh;
   width: 20vw;
+}
+
+.card-img{
+  height: 20%;
+  object-fit: contain;
+  width: 80%;
 }
 
 .card h3 {

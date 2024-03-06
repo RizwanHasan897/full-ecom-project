@@ -23,22 +23,38 @@ function Items() {
         };
     }, []);
 
-    const filteredTableData = tableData.filter((rowData) => rowData.some((cellData) => cellData !== ''));
+    const convertToObj = (data) => ({
+        imageSrc: "../image/zoro.jpg",
+        name: data[1],
+        price: data[2],
+        height: data[3],
+        width: data[4],
+        quainity: data[5],
+    });
+
+    const renderItems = () => {
+        return tableData.slice(1).map((rowData, index) => {
+            const itemData = convertToObj(rowData);
+            return (
+                <div className="card" key={index}>
+                    <ul>
+                        <li key={index} className="card-data">
+                            <img src={itemData.imageSrc} alt={itemData.name} className='card-img' />
+                            <p>{itemData.name}</p>
+                            <p>{itemData.price}</p>
+                            <p>{itemData.height}</p>
+                            <p>{itemData.width}</p>
+                            <p>{itemData.quainity}</p>
+                        </li>
+                    </ul>
+                </div>
+            );
+        });
+    };
 
     return (
         <div className="card-slider-container">
-            {filteredTableData.slice(1).map((rowData, index) => (
-                <div className="card" key={index}>
-                    <ul>
-                        {rowData.map((cellData, cellIndex) => (
-                            <li key={cellIndex} className={"card-data" + cellIndex}>
-                                {cellData}
-                                {console.log(cellData)}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            ))}
+            {renderItems()}
         </div>
     );
 }
