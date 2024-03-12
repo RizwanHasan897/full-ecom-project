@@ -5,7 +5,7 @@ function Home() {
     return (
 
         <div>
-            {/* <Header /> */}
+            <Header />
             {/* <h1>Customer Home Page</h1> */}
             <Items />
 

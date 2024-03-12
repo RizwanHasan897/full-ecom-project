@@ -24,7 +24,7 @@ function Items() {
     }, []);
 
     const convertToObj = (data) => ({
-        imageSrc: "../image/zoro.jpg",
+        imageSrc: data[0],
         name: data[1],
         price: data[2],
         height: data[3],
@@ -39,7 +39,8 @@ function Items() {
                 <div className="card" key={index}>
                     <ul>
                         <li key={index} className="card-data">
-                            <img src={itemData.imageSrc} alt={itemData.name} className='card-img' />
+                            {console.log(itemData.imageSrc)}
+                            {itemData.imageSrc ? <img src={require(`./../image/${itemData.imageSrc}`)} alt={itemData.name} className='card-img' /> : null}
                             <p>{itemData.name}</p>
                             <p>{itemData.price}</p>
                             <p>{itemData.height}</p>
