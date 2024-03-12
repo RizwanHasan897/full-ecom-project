@@ -24,7 +24,7 @@ function Items() {
     }, []);
 
     const convertToObj = (data) => ({
-        imageSrc: data[0],
+        imageSrc: 'zoro.jpg',
         name: data[1],
         price: data[2],
         height: data[3],
