@@ -1,14 +1,21 @@
-import Header from '../components/Header';
+import React, { useState, useEffect } from 'react';
+import HomeHeader from '../components/HomeHeader';
 import Items from '../components/Items';
 
 function Home() {
+    const [shoppingCart, setShoppingCart] = useState([]);
+
+    useEffect(() => {
+        const storedCart = localStorage.getItem('shoppingCart');
+        if (storedCart) {
+            setShoppingCart(JSON.parse(storedCart));
+        }
+    }, []);
+
     return (
-
         <div className='customer-home'>
-            <Header />
-            {/* <h1>Customer Home Page</h1> */}
-            {1 ? <Items /> : <div></div>}
-
+            <HomeHeader shoppingCart={shoppingCart} />
+            {1 ? <Items setShoppingCart={setShoppingCart} /> : <div></div>}
         </div>
     );
 }

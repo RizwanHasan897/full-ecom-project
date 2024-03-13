@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 
-function Items() {
+function Items({ setShoppingCart }) {
     const [tableData, setTableData] = useState([]);
 
     useEffect(() => {
@@ -34,6 +34,33 @@ function Items() {
         quainity: data[5]
     });
 
+    function addToCart(e) {
+        e.preventDefault();
+        const target = e.currentTarget;
+        const grandparent = target.closest('.card');
+        const imageSrc = grandparent.querySelector('.card-img').getAttribute('src');
+        const name = grandparent.querySelector('.card-name').textContent;
+
+        const cartItem = {
+            imageSrc,
+            name
+        };
+
+        setShoppingCart(prevShoppingCart => {
+            const newCart = [cartItem, ...prevShoppingCart];
+            localStorage.setItem('shoppingCart', JSON.stringify(newCart));
+            return newCart;
+        });
+    }
+
+
+    useEffect(() => {
+        const storedCart = localStorage.getItem('shoppingCart');
+        if (storedCart) {
+            setShoppingCart(JSON.parse(storedCart));
+        }
+    }, [setShoppingCart]);
+
     const renderItems = () => {
         return tableData.slice(1).map((rowData, index) => {
             const itemData = convertToObj(rowData);
@@ -47,10 +74,10 @@ function Items() {
                     </div>
                     <div className="card-content">
                         <h3 className='card-name'>{itemData.name}</h3>
-                        <p className='card-deet'>Height: {itemData.height}cm | Width: {itemData.width}cm | Quantity: {itemData.quainity} </p>
+                        <p className='card-deet'>Height: {itemData.height}cm | Width: {itemData.width}cm | Quantity: {itemData.quainity} |</p>
                         <div className='card-buy'>
                             <p className='card-price'>Price: £{itemData.price}</p>
-                            <button className='card-cart'><FontAwesomeIcon icon={faCartShopping} /></button>
+                            <button className='card-cart' onClick={(e) => addToCart(e)}><FontAwesomeIcon icon={faCartShopping} /></button>
                         </div>
                     </div>
                 </div>

@@ -78,10 +78,9 @@ function AdminDashboard() {
 
                     <tbody>
                         {tableData.slice(1).map((rowData, rowIndex) => {
-                            // Check if the row contains any non-empty cells
                             const hasData = rowData.some(cellData => cellData.trim() !== '');
                             if (!hasData) {
-                                return null; // Skip rendering empty rows
+                                return null;
                             }
 
                             return (
