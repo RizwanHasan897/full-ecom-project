@@ -53,7 +53,7 @@ function Items({ setShoppingCart }) {
         });
     }
 
-
+    //
     useEffect(() => {
         const storedCart = localStorage.getItem('shoppingCart');
         if (storedCart) {
@@ -91,5 +91,5 @@ function Items({ setShoppingCart }) {
         </div>
     );
 }
-
+// webpack, Image react, imges, learn webpack and config.
 export default Items;
