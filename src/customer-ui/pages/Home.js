@@ -4,10 +4,10 @@ import Items from '../components/Items';
 function Home() {
     return (
 
-        <div>
+        <div className='customer-home'>
             <Header />
             {/* <h1>Customer Home Page</h1> */}
-            <Items />
+            {1 ? <Items /> : <div></div>}
 
         </div>
     );
