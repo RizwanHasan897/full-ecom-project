@@ -167,7 +167,6 @@ th, td {
   color: blue;
   left: 100%;
   top: 70%;
-  z-index: 2;
 }
 
 .home-admin{
@@ -283,3 +282,13 @@ th, td {
   color: rgb(150, 53, 53);
 }
 
+.cart-div{
+  position: absolute;
+  width: 40%;
+  height: 100vh;
+  top: 0;
+  right: 0;
+  background-color: white;
+  transform: translateX(0%);
+  transition: transform 0.3s ease-in;
+}
