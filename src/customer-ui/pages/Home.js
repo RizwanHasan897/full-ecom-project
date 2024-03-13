@@ -22,8 +22,6 @@ function Home() {
     }, []);
 
 
-
-
     return (
         <div className='customer-home'>
             <HomeHeader shoppingCart={shoppingCart} setCartActive={setCartActive} />
