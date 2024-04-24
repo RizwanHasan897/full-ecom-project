@@ -7,7 +7,9 @@ function Home() {
 
     const [shoppingCart, setShoppingCart] = useState([]);
     const [itemsData, setItemsData] = useState([]);
-    const [cartActive, setCartActive] = useState(false);
+    const [isCartOpen, setIsCartOpen] = useState(false);
+
+
 
     useEffect(() => {
         const storedCart = localStorage.getItem('shoppingCart');
@@ -24,9 +26,9 @@ function Home() {
 
     return (
         <div className='customer-home'>
-            <HomeHeader shoppingCart={shoppingCart} setCartActive={setCartActive} />
+            <HomeHeader shoppingCart={shoppingCart} isCartOpen={isCartOpen} setIsCartOpen={setIsCartOpen}/>
             {itemsData.length > 0 ? <Items setShoppingCart={setShoppingCart} /> : <div></div>}
-            {cartActive ? <Cart /> : null}
+            {isCartOpen ? <Cart shoppingCart={shoppingCart} /> : null}
         </div>
     );
 }

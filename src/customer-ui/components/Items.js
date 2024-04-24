@@ -53,7 +53,6 @@ function Items({ setShoppingCart }) {
         });
     }
 
-    //
     useEffect(() => {
         const storedCart = localStorage.getItem('shoppingCart');
         if (storedCart) {

@@ -287,8 +287,20 @@ th, td {
   width: 40%;
   height: 100vh;
   top: 0;
-  right: 0;
+  left: 0;
   background-color: white;
-  transform: translateX(0%);
-  transition: transform 0.3s ease-in;
+  z-index: 1;
+  overflow-x: auto;
+}
+
+.cart-item{
+  position: relative;
+  top: 0;
+  display: flex;
+}
+
+.cart-item > img {
+  height: 30%;
+  width: 30%;
+  aspect-ratio: 1;
 }

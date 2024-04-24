@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 
-function HomeHeader({ shoppingCart, setCartActive }) {
+function HomeHeader({ shoppingCart, isCartOpen, setIsCartOpen }) {
+
 
     function openCart() {
-        if (setCartActive) {
-            setCartActive = !setCartActive;
+        if(isCartOpen){
+            setIsCartOpen(false)
         } else {
-            setCartActive = true
+            setIsCartOpen(true)
         }
     }
 
@@ -25,6 +26,7 @@ function HomeHeader({ shoppingCart, setCartActive }) {
                         <h3 className="home-number">{shoppingCart.length}</h3>
                     </div>
                 </div>
+                {/* {isCartOpen ? <Cart shoppingCart={shoppingCart} /> : null} */}
             </div >
         </>
     )
