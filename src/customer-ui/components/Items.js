@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import Card from './Card';
+
+import { Canvas } from '@react-three/fiber';
+import Card3DComponent, { Controls } from '../components/Card3DComponent';
 
 function Items({ setShoppingCart }) {
     const [tableData, setTableData] = useState([]);
@@ -67,19 +69,15 @@ function Items({ setShoppingCart }) {
                 return null;
             }
             return (
-                <div className="card" key={index}>
-                    <div className="card-img-container">
-                        {itemData.imageSrc && <img src={require(`./../image/${itemData.imageSrc}`)} alt={itemData.name} className='card-img' />}
-                    </div>
-                    <div className="card-content">
-                        <h3 className='card-name'>{itemData.name}</h3>
-                        <p className='card-deet'>Height: {itemData.height}cm | Width: {itemData.width}cm | Quantity: {itemData.quainity} |</p>
-                        <div className='card-buy'>
-                            <p className='card-price'>Price: £{itemData.price}</p>
-                            <button className='card-cart' onClick={(e) => addToCart(e)}><FontAwesomeIcon icon={faCartShopping} /></button>
-                        </div>
-                    </div>
-                </div>
+                
+                // <Card itemData={itemData} index={index}  addToCart={addToCart}/>
+                <Canvas>
+                    <ambientLight intensity={0.5} />
+                    <pointLight position={[10, 10, 10]} />
+                    <Card3DComponent />
+                    <Controls />
+                </Canvas>
+
             );
         });
     };
