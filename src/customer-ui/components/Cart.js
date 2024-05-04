@@ -5,7 +5,7 @@ function Cart({ shoppingCart }) {
         return (
             shoppingCart.map(cart => (
                 <div className='cart-item' key={cart.id}>
-                    <img src={require(`./../image/${cart.name}.jpg`)} />
+                    <img src={require(`./../image/${cart.name}.jpg`)} alt="failed to load" />
                     <h1>{cart.name}</h1>
                 </div>
             ))

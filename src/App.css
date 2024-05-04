@@ -182,17 +182,14 @@ th, td {
 
 .customer-home{
   height: 100vh;
-  overflow: hidden;
 }
 
 .card-slider-container {
-  background-color: #595959;
-  width: 100%;
-  height: 80vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height: 100vh;
+  gap: 20px;
+  overflow: auto;
 }
+
 
 .card {
   height: 50%;
