@@ -1,4 +1,3 @@
-// Card3DComponent.js
 import React, { useRef } from 'react';
 import { Canvas, extend, useThree } from '@react-three/fiber';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
@@ -15,8 +14,8 @@ export function Controls() {
             args={[camera, gl.domElement]}
             enableDamping
             dampingFactor={0.25}
-            maxDistance={10} // Limiting the max zoom distance
-            minDistance={2} // Adjust this value according to your scene's scale
+            maxDistance={10}
+            minDistance={2} 
         />
     );
 }

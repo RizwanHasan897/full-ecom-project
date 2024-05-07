@@ -46,5 +46,13 @@
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "index.js",
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RizwanHasan897/full-ecom-project.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RizwanHasan897/full-ecom-project/issues"
+  },
+  "homepage": "https://github.com/RizwanHasan897/full-ecom-project#readme"
 }
